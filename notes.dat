@@ -1,0 +1,14 @@
+Fixtures are used for backup
+
+Below is some command and its explanation is as follow.
+One can be specific on the data that one wants to extract from the app
+    For example below  the app_name has been specified
+    python manage.py app_name dumpdata --format json --indent 4 > app-name/fixtures/filen_name.json
+
+    This second example the app_name has not beenn specified
+    The greater than sign shows that after generating the data we write it into a json file
+    python manage.py dumpdata --format json --indent 4 > app-name/fixtures/filen_name.json
+
+2. Reload the data back
+
+    pythonn  mange.py loaddata app_name/fixtures/file_name.json
