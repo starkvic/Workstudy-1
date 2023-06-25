@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserChangeForm,UserCreationForm
 
 
-from cutomuser.models import MyUser,Student,Job,Application,Workday
+from cutomuser.models import User,Job,Application,Workday,Workarea
 
 
 
@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ["email", "date_created", "is_admin","is_staff","user_id","middle_name"]
+    list_display = ["email", "created", "is_admin","is_staff","user_id","middle_and_last_name"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),
@@ -32,7 +32,7 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ["wide"],
-                "fields": ["email", "password1", "password2"],
+                "fields": ["email","user_id",'first_name', 'middle_and_last_name',"password1", "password2"],
             },
         ),
     ]
@@ -41,8 +41,18 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = []
 
     # Now register the new UserAdmin...
-admin.site.register(MyUser, UserAdmin)
+admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
-admin.site.register([Application,Student,Job,Workday])
+
+
+class WorkdayAdmin(admin.ModelAdmin):
+    list_display = ['created','check_out',"user"]
+    pass
+class JobAdmin(admin.ModelAdmin):
+    list_display = ['id','job_title','hourly_rate']
+    pass
+admin.site.register(Workday,WorkdayAdmin)
+admin.site.register(Job,JobAdmin)
+admin.site.register([Application,Workarea])

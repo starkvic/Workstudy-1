@@ -1,8 +1,7 @@
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django import forms
-from .models import MyUser,Workday
-
+from .models import User,Workday,Workarea
 
 class RegisterForm(forms.ModelForm):
     """
@@ -13,7 +12,7 @@ class RegisterForm(forms.ModelForm):
     password_2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
 
     class Meta:
-        model = MyUser
+        model = User
         fields = ['email']
 
     def clean_email(self):
@@ -21,7 +20,7 @@ class RegisterForm(forms.ModelForm):
         Verify email is available.
         '''
         email = self.cleaned_data.get('email')
-        qs = MyUser.objects.filter(email=email)
+        qs = User.objects.filter(email=email)
         if qs.exists():
             raise forms.ValidationError("email is taken")
         return email
@@ -49,8 +48,8 @@ class UserCreationForm(forms.ModelForm):
 
 
     class Meta:
-        model = MyUser
-        fields = ["user_id","email",'first_name','middle_name',"last_name",'gender','phone']
+        model = User
+        fields = ["user_id","email",'first_name','middle_and_last_name','gender','role','phone']
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -78,12 +77,27 @@ class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = MyUser
-        fields = ["email", "password", "is_active", "is_admin"]
+        model = User
+        fields = ["email",'first_name','middle_and_last_name','role','phone']
 
 
 #Workday form 
 class WorkdayForm(forms.ModelForm):
     class Meta:
         model=Workday
-        fields = ["check_out","check_in","user_id"]
+        fields = ["check_out","check_in","user"]
+
+#Workarea form 
+class WorkareaForm(forms.ModelForm):
+    class Meta:
+        model = Workarea
+        fields = "__all__"
+        exclude = ["archived"]
+    def clean_incharge(self):
+        incharge = self.cleaned_data.get('incharge')
+        user = User.objects.filter(email = incharge)
+        if user.exists():
+            staff=User.objects.get(email=incharge)
+            staff.is_staff = True
+            staff.save()
+        return incharge

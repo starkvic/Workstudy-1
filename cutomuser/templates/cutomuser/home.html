@@ -1,3 +1,7 @@
 {% extends "cutomuser/base.html" %} {% load crispy_forms_tags %} {% block content %}
 
+<button><a href="{% url 'workday' %}">Check In</a></button>
+<button><a href="{% url 'workday_update' 1 %}">Check Out</a></button>
+{{day_beginning}}
+{{context}}
 {% endblock content %}
