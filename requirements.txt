@@ -1,8 +1,13 @@
+argon2-cffi==21.3.0
+argon2-cffi-bindings==21.2.0
 asgiref==3.7.2
+cffi==1.15.1
 crispy-bootstrap5==0.7
 Django==4.2.2
+django-braces==1.15.0
 django-crispy-forms==2.0
 mysqlclient==2.1.1
+pycparser==2.21
 sqlparse==0.4.4
 typing_extensions==4.6.3
 tzdata==2023.3
