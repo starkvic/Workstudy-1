@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django import forms
-from .models import User,Workday,Workarea
+from .models import User,Workday,Workarea,Application
 
 class RegisterForm(forms.ModelForm):
     """
@@ -101,3 +101,17 @@ class WorkareaForm(forms.ModelForm):
             staff.is_staff = True
             staff.save()
         return incharge
+
+#Application form
+class ApplicationForm(forms.ModelForm):
+   
+    class Meta:
+        model = Application
+        fields = "__all__"
+        exclude = ['archived']
+    def clean_user(self):
+        user= self.cleaned_data.get('user')
+        user = Application.objects.filter(user=user)
+        if user.exists():
+            raise ValidationError(f"{user} has already applied for this job!")
+

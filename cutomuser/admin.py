@@ -48,7 +48,7 @@ admin.site.unregister(Group)
 
 
 class WorkdayAdmin(admin.ModelAdmin):
-    list_display = ['created','check_out',"user"]
+    list_display = ['created','check_out',"user",'workarea']
     pass
 class JobAdmin(admin.ModelAdmin):
     list_display = ['id','job_title','hourly_rate']

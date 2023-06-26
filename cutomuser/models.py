@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import localtime
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.urls import reverse,reverse_lazy
 from .validators import validate_work_day,validate_phone
@@ -149,8 +150,8 @@ class Application(models.Model):
      user = models.ForeignKey(User,on_delete=models.CASCADE)
      job = models.ForeignKey(Job,on_delete=models.CASCADE)
      created = models.DateTimeField(auto_now_add=True)
-     is_approved = models.BooleanField(default=False)
-     archived = models.BooleanField(default=False,null=True)
+     is_approved = models.BooleanField(default=False,null=True,blank=True)
+     archived = models.BooleanField(default=False,null=True,blank=True)
 
      class Meta:
         ordering = ["-created"]
@@ -188,7 +189,11 @@ class Workday(models.Model):
         ordering = ["-time_out","-created"]
      def get_absolute_url(self):
          return reverse_lazy("workday-detail",kwargs={"pk":self.pk})
-     
+     def day_beginning(dt=None):
+        # if dt is None, localtime() operates on now()
+        return localtime(dt).replace(hour=0, minute=0, second=0, microsecond=0)
+     def days_hours_minutes(td):
+        return {'days':td.days, 'hrs':td.seconds//3600, 'mins':(td.seconds//60)%60}
      def __str__(self):
          return "{}  /  {} hrs {}".format(str(self.date.day),str(self.date.year),str(self.date.hour))
     #  @property

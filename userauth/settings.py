@@ -58,7 +58,7 @@ ROOT_URLCONF = 'userauth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'  ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,7 +122,7 @@ PASSWORD_HASHERS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -133,7 +133,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-LOGIN_REDIRECT_URL = 'user-home'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+
+LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
