@@ -117,6 +117,45 @@
     }
 },
 {
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2023-06-27T22:08:29.260Z",
+        "user": "lenno",
+        "content_type": 6,
+        "object_id": "lennovo",
+        "object_repr": "kahi@gmail.come",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2023-06-27T22:08:42.918Z",
+        "user": "lenno",
+        "content_type": 6,
+        "object_id": "lennovo",
+        "object_repr": "kahi@gmail.come",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Is admin\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2023-06-28T23:53:35.302Z",
+        "user": "lenno",
+        "content_type": 7,
+        "object_id": "3",
+        "object_repr": "Web Design",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -566,10 +605,10 @@
 },
 {
     "model": "sessions.session",
-    "pk": "pt3cxn9eveqxkbufah81j5vhcywp1bs0",
+    "pk": "p5mha1vq7o48qnc00qlnef0wp1bv5r5s",
     "fields": {
-        "session_data": ".eJxVjEsOwjAMBe-SNYriJk1clux7hsp2LFqoEqmfFeLuUKkL2L6ZeS8z0L6Nw77qMkzZXM2spVRz-d2Z5KnlgPlB5V6t1LItE9tDsSddbV-zzrfT_TsYaR2_tUL00kWHqQlNx4SacghBUMQjOMCQyLVN9q5lFvLCwOARCWLXCqh5fwAFgTkb:1qDWy2:y03MWnNMliDpU4RFnX3DirqKHVl_FHcKdn3qJmmMtlI",
-        "expire_date": "2023-07-09T21:08:18.199Z"
+        "session_data": ".eJxVjEsOwjAMBe-SNYriJk1clux7hsp2LFqoEqmfFeLuUKkL2L6ZeS8z0L6Nw77qMkzZXM2spVRz-d2Z5KnlgPlB5V6t1LItE9tDsSddbV-zzrfT_TsYaR2_tUL00kWHqQlNx4SacghBUMQjOMCQyLVN9q5lFvLCwOARCWLXCqh5fwAFgTkb:1qEext:0vgL_iXNYPK-pBGhurpde--h6aHXSI4mjYijxvkHqCA",
+        "expire_date": "2023-07-12T23:52:49.601Z"
     }
 },
 {
@@ -578,6 +617,52 @@
     "fields": {
         "session_data": "e30:1qDWqf:79o18A6ygEOPDJAZnNXbTgCAK_Dua8a_HrdAeOT5x-M",
         "expire_date": "2023-07-09T21:00:41.797Z"
+    }
+},
+{
+    "model": "cutomuser.user",
+    "pk": "BBC",
+    "fields": {
+        "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$dEtNY3JtVFNEQnJnV0tSMHVrUUt2Wg$ianeDarD44p8wuwNRNXMMCI5rvHN3JzZ4/rgtEqLNf8",
+        "last_login": "2023-06-28T21:59:31.267Z",
+        "email": "bbc@gmail.com",
+        "created": "2023-06-28",
+        "is_active": true,
+        "is_admin": false,
+        "is_staff": false,
+        "is_superuser": false,
+        "gender": "M",
+        "phone": "0794401778",
+        "first_name": "News",
+        "middle_and_last_name": "Today and Tomorrow",
+        "level": null,
+        "role": "Staff Member",
+        "course": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "cutomuser.user",
+    "pk": "bbob",
+    "fields": {
+        "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$SkNuZzdpRjZhajBOSGYzOUh1aXFJaw$X6fdqaXWIL3IxAQ+AkTD73bPFAOZscyO2cQj3wj9x/k",
+        "last_login": "2023-06-28T23:33:56.167Z",
+        "email": "bbob@gmail.com",
+        "created": "2023-06-29",
+        "is_active": true,
+        "is_admin": false,
+        "is_staff": false,
+        "is_superuser": false,
+        "gender": "M",
+        "phone": "0794401778",
+        "first_name": "Bob",
+        "middle_and_last_name": "News Anchor",
+        "level": null,
+        "role": "Student Member",
+        "course": null,
+        "groups": [],
+        "user_permissions": []
     }
 },
 {
@@ -605,10 +690,33 @@
 },
 {
     "model": "cutomuser.user",
+    "pk": "kbcnews",
+    "fields": {
+        "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$dm81ZnU5TjB4aFI0YnN5dExadFI5Zg$H/P9Z+8sZEL3NiPUP4AsdGeqpwk/f/2nbSdY1+gNlO0",
+        "last_login": "2023-06-28T22:04:55.237Z",
+        "email": "kbc@gmail.com",
+        "created": "2023-06-28",
+        "is_active": true,
+        "is_admin": false,
+        "is_staff": false,
+        "is_superuser": false,
+        "gender": "M",
+        "phone": "0794401778",
+        "first_name": "News",
+        "middle_and_last_name": "Today and Tomorrow",
+        "level": null,
+        "role": "Staff Member",
+        "course": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "cutomuser.user",
     "pk": "lenno",
     "fields": {
         "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$MUlhU2VnV1NuN3h2Q1VscmxRNmdzVQ$QLa3c9Qri+tWFNhnuOJIrK+cSzmEoccZhv2GyKeYUAE",
-        "last_login": "2023-06-25T21:08:18.175Z",
+        "last_login": "2023-06-28T23:52:49.508Z",
         "email": "lenno@gmail.com",
         "created": "2023-06-25",
         "is_active": true,
@@ -619,6 +727,29 @@
         "phone": "",
         "first_name": "",
         "middle_and_last_name": "",
+        "level": null,
+        "role": "role",
+        "course": null,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "cutomuser.user",
+    "pk": "lennovo",
+    "fields": {
+        "password": "argon2$argon2id$v=19$m=102400,t=2,p=8$MkhqbVZWcENnY0dqRk9UVGtLNzdxMg$1KY5RJyJYni+HzNx84nxF5uIYB5l+0Ku4Zi7Q7dy0tY",
+        "last_login": null,
+        "email": "kahi@gmail.come",
+        "created": "2023-06-28",
+        "is_active": true,
+        "is_admin": true,
+        "is_staff": false,
+        "is_superuser": false,
+        "gender": null,
+        "phone": "",
+        "first_name": "David",
+        "middle_and_last_name": "Brian Rungua",
         "level": null,
         "role": "role",
         "course": null,
@@ -656,7 +787,8 @@
         "job_title": "cleaning",
         "hourly_rate": 25,
         "created": "2023-06-25T19:45:35.754Z",
-        "archived": false
+        "archived": false,
+        "slots": null
     }
 },
 {
@@ -666,7 +798,19 @@
         "job_title": "Custodian",
         "hourly_rate": 20,
         "created": "2023-06-25T19:47:03.988Z",
-        "archived": false
+        "archived": false,
+        "slots": null
+    }
+},
+{
+    "model": "cutomuser.job",
+    "pk": 3,
+    "fields": {
+        "job_title": "Web Design",
+        "hourly_rate": 30,
+        "created": "2023-06-28T23:53:35.258Z",
+        "archived": false,
+        "slots": 30
     }
 },
 {
@@ -678,6 +822,105 @@
         "created": "2023-06-26T11:34:38.148Z",
         "is_approved": true,
         "archived": false
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 2,
+    "fields": {
+        "user": "lennovo",
+        "job": 1,
+        "created": "2023-06-27T22:17:00.995Z",
+        "is_approved": true,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 3,
+    "fields": {
+        "user": "ncy1122",
+        "job": 1,
+        "created": "2023-06-28T18:51:19.000Z",
+        "is_approved": true,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 4,
+    "fields": {
+        "user": "lenno",
+        "job": 2,
+        "created": "2023-06-28T21:04:22.666Z",
+        "is_approved": false,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 5,
+    "fields": {
+        "user": "lenno",
+        "job": 1,
+        "created": "2023-06-28T21:55:31.353Z",
+        "is_approved": false,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 6,
+    "fields": {
+        "user": "BBC",
+        "job": 2,
+        "created": "2023-06-28T22:00:54.683Z",
+        "is_approved": false,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 7,
+    "fields": {
+        "user": "BBC",
+        "job": 1,
+        "created": "2023-06-28T22:01:32.705Z",
+        "is_approved": false,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 8,
+    "fields": {
+        "user": "kbcnews",
+        "job": 2,
+        "created": "2023-06-28T22:05:06.761Z",
+        "is_approved": false,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 9,
+    "fields": {
+        "user": "bbob",
+        "job": 2,
+        "created": "2023-06-28T23:34:13.309Z",
+        "is_approved": false,
+        "archived": true
+    }
+},
+{
+    "model": "cutomuser.application",
+    "pk": 10,
+    "fields": {
+        "user": "lenno",
+        "job": 3,
+        "created": "2023-06-28T23:55:22.344Z",
+        "is_approved": false,
+        "archived": true
     }
 },
 {
@@ -717,6 +960,7 @@
         "check_out": true,
         "check_in": false,
         "time_out": "09:06:52.407",
+        "archived": false,
         "user": "lenno",
         "workarea": 1,
         "created": "2023-06-26T09:02:59.420Z"
