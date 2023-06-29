@@ -1,0 +1,182 @@
+<style>
+       /*Progress Bars Start */
+       .meter {
+  box-sizing: content-box;
+  height: 30px; /* Can be anything */
+  position: relative;
+  margin: 60px 0 20px 0; /* Just for demo spacing */
+  background: #555;
+  border-radius: 25px;
+  padding: 10px;
+  box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+}
+.meter > span {
+  display: block;
+  height: 100%;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: rgb(43, 194, 83);
+  background-image: linear-gradient(
+    center bottom,
+    rgb(43, 194, 83) 37%,
+    rgb(84, 240, 84) 69%
+  );
+  box-shadow: inset 0 2px 9px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+.meter > span:after,
+.animate > span > span {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: move 2s linear infinite;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;
+}
+
+.animate > span:after {
+  display: none;
+}
+
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+.orange > span {
+  background-image: linear-gradient(#f1a165, #f36d0a);
+}
+
+.red > span {
+  background-image: linear-gradient(#f0a3a3, #f42323);
+}
+.blue > span {
+  background-image: linear-gradient(#f0a3a3, #180465);
+}
+.pink > span {
+  background-image: linear-gradient(#f0a3a3, #530622);
+}
+
+.nostripes > span > span,
+.nostripes > span::after {
+  background-image: none;
+}
+
+#page-wrap {
+  width: 490px;
+  margin: 80px auto;
+}
+    /*Progress Bars end */
+
+
+h1 {
+  font-size: 42px;
+  font-weight: 600;
+  margin: 0 0 30px;
+}
+pre {
+  background: #000;
+  text-align: left;
+  padding: 20px;
+  margin: 0 auto 30px;
+}
+
+
+</style>
+
+{% load my_templates %}
+{% load static %}
+
+<div class="table-data">
+    <div id="activities" class="order">
+        <div class="head">
+            <h3>Recent Activities</h3>
+            <i class='bx bx-search' ></i>
+            <i class='bx bx-filter' ></i>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Woker</th>
+                    <th>Date </th>
+                    <th>Job</th>
+                    <th>Time taken </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for workday in workdays %}
+                <tr>
+                    <td>
+                        <img src="{% static 'images/avatar.svg' %}">
+                        <p>{{workday.user.user_id}}</p>
+
+                    </td>
+                    <td>{{workday.created|date}}</td>
+                    <td><span class="status completed">{{workday.workarea.job}}</span></td>
+                    <td>{{workday.created|timesince}}</td>
+                </tr>
+                {% endfor %}      
+            </tbody>
+        </table>
+    </div>
+
+    <!--Too included-->
+    <div id="slots_analysis" class="todo">
+        <div class="head">
+            <h3>Slots Remaining Analysis</h3>
+
+            <i class='bx bx-plus' ></i>
+            <i class='bx bx-filter' ></i>
+        </div>
+        <ul class="todo-list">
+            {% for job in jobs %}
+            {% slots job as applications %}
+            {% get_colors colors job.id as p %}
+            <span class="title"><h3> {{job.job_title|upper}}</h3></span>
+           
+            <div class="{{p}}">
+                <span class="progress-bar" data-width="{{applications}}" ></span>
+            </div>
+            {% endfor %}
+               
+        </ul>
+    </div>
+  
+</div>
+<script>
+    let getSpans = document.querySelectorAll('.progress-bar')
+    getSpans.forEach((span)=>{
+        let data = span.getAttribute('data-width')
+        span.style.width = ((data/30)*100).toString()+"%"
+        span.innerHTML = (((data/30)*100).toFixed(2)).toString()+"%"
+        span.style.color = "white"
+        span.style.size = "10px"
+        
+    })
+</script>

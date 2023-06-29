@@ -1,21 +1,58 @@
-
-from typing import Any
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render,get_object_or_404,redirect
+from django.contrib import messages
+from django.http import  HttpResponse
+from django.shortcuts import get_object_or_404,redirect,render
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 from django.views.generic import (
     CreateView,DetailView,UpdateView,ListView
 )
 from django.db.models import Q,F
-from .models import Workday,User,Job,Workarea
+from .models import Workday,User,Job,Workarea,Application
 from django.utils import timezone
 import datetime
 from django.utils.timezone import localtime
 from django.views.generic import dates
+from collections import Counter
+from django.core.exceptions import ValidationError
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+def create_job_application(request,job_id):
+    if request.method == "POST":
+        user = get_object_or_404(User,user_id=request.user.user_id)
+        job = get_object_or_404(Job,id=job_id)
+        alread_applied = Application.objects.filter(Q(job=job)&Q(user=user))
+        if alread_applied.exists():
+
+            messages.warning(request,f"{user} has already applied for this job!",extra_tags="warning")
+            return redirect('.')
+        Application.objects.create(
+            user = user,
+            job=job,
+        )
+        messages.success(request,"Your application was successful!")
+        return redirect('home')
+    return render(request,"cutomuser/job_application.html")
 
 
+def generator(n):
+    #initialize the counter value 
+    value = 0
+    #Loop until the counter is less than n
+    while value <n:
+        #produce the current value of the counter
+        yield value
+
+        #increment the counter 
+        value +=1
+import random
+statuses = [
+    'pending','process','completed'
+]
 
 class ArticleTodayArchiveView(LoginRequiredMixin,dates.DayArchiveView):
     queryset = User.objects.all()
@@ -39,10 +76,10 @@ class General_Create_View(CreateView):
     def post(self, request, *args, **kwargs):
       return super().post(request, *args, **kwargs)
 
-class JobAppllicationView(CreateView):
-    success_url  = reverse_lazy('home')
-    def form_valid(self, form):
-        return super().form_valid(form)
+class JobAppllicationView(LoginRequiredMixin,CreateView):
+    success_url = reverse_lazy('home')
+    def form_valid(self,class_form):
+        return super().form_valid(class_form)
     
     
     
@@ -60,7 +97,7 @@ class WorkareaView(LoginRequiredMixin,DetailView):
 
 
     
-class HomeView(LoginRequiredMixin,ListView):
+class HomeView(ListView):
     q=None
     myid=0
     workdays = Workday.objects.all()
@@ -76,8 +113,18 @@ class HomeView(LoginRequiredMixin,ListView):
                                 Q(name__icontains=self.q)
                                 )
         context['jobs'] =Job.objects.all()
+
+        
+        applications = {}
+        try:
+            applications = Counter([i.job.job_title for i in Application.objects.all()])
+        except:
+            pass
+        context['applications_per_job_dict'] =dict(applications)
         context['workareas'] =workareas
-        context['workdays'] =Workday.objects.filter(Q(workarea__job__job_title__icontains=self.q))
+        context['statuses'] = random.shuffle(statuses)
+        context['colors']=['meter animate','meter  orange nostripes','meter','meter  red nostripes','meter  blue nostripes','meter  pink nostripes']
+        context['workdays'] =Workday.objects.filter(Q(workarea__job__job_title__icontains=self.q,archived = False))
         if self.workdays.count() > 0 :
             if self.workdays.first().check_in == False:
                 context["check_in"]=True
@@ -94,6 +141,12 @@ class HomeView(LoginRequiredMixin,ListView):
                self.myid=F('id')+1
            else:
                self.myid = 1 
+            #When creating a new workday, archive all the previous workdays so that we can filter the latest
+           unarchived_days = Workday.objects.filter(created__lt=begin+datetime.timedelta(hours=8)) 
+           if unarchived_days:
+               for i in unarchived_days:
+                   i.archived =True
+
            workarea = Workarea.objects.get(id=workarea_id)
            workday= Workday.objects.create(
                  id=1,
@@ -111,12 +164,15 @@ class HomeView(LoginRequiredMixin,ListView):
             workday.save()
             return redirect('home')
         elif not now > begin+datetime.timedelta(hours=8):
-            return HttpResponse("You can Check in only from 8:00 am")
+            messages.warning(request,f"You can Check in only from 8:00 am")
+            return redirect('.')
         elif not now.weekday()<5:
-            return HttpResponse("Weekend is not a working time! Rest!")
+            messages.warning(request,f"Weekend is not a working time! Rest!")
+            return redirect('.')
         else:
-            return HttpResponse("Just Wait, You cannot check in twice")
-        
+            messages.warning(request,f"Just Wait, You cannot check in twice")
+            return redirect('.')
+    
 
 
 
@@ -133,7 +189,9 @@ class UserProfileView(LoginRequiredMixin,DetailView):
         context['self.workdays'] =Workday.objects.filter(Q(workarea__job__job_title__icontains=self.q))
         return context
 
-
+class NewUserView(SuccessMessageMixin,CreateView):
+    success_url = reverse_lazy('login')
+    success_message = "%(email)s , your registration was successful"
 
 
     

@@ -140,7 +140,7 @@ class Job(models.Model):
      hourly_rate = models.IntegerField()
      created = models.DateTimeField(auto_now_add=True)
      archived = models.BooleanField(default=False,null=True)
-
+     slots = models.IntegerField(null=True,default=30)
      def __str__(self):
          return self.job_title
  #Student Schema
@@ -150,9 +150,8 @@ class Application(models.Model):
      user = models.ForeignKey(User,on_delete=models.CASCADE)
      job = models.ForeignKey(Job,on_delete=models.CASCADE)
      created = models.DateTimeField(auto_now_add=True)
-     is_approved = models.BooleanField(default=False,null=True,blank=True)
-     archived = models.BooleanField(default=False,null=True,blank=True)
-
+     is_approved = models.BooleanField(default=False)
+     archived = models.BooleanField(null=True,default=True)
      class Meta:
         ordering = ["-created"]
 
@@ -180,6 +179,7 @@ class Workday(models.Model):
      check_out = models.BooleanField(default=False)
      check_in = models.BooleanField(default=False)
      time_out= models.TimeField(auto_now_add=True)
+     archived = models.BooleanField(default=False,null=True)
      user = models.ForeignKey(User,on_delete=models.CASCADE)
      workarea = models.ForeignKey(Workarea,on_delete=models.CASCADE)
      #created is the same as time in

@@ -108,10 +108,12 @@ class ApplicationForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = "__all__"
-        exclude = ['archived']
+        #exclude = ['archived']
     def clean_user(self):
-        user= self.cleaned_data.get('user')
-        user = Application.objects.filter(user=user)
+        user_email= self.cleaned_data.get('user')
+        user = Application.objects.filter(user=user_email)
         if user.exists():
-            raise ValidationError(f"{user} has already applied for this job!")
+            raise ValidationError(f"{user_email} has already applied for this job!")
+        
+        return User.objects.get(email = user_email)
 

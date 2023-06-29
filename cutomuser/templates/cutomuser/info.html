@@ -1,0 +1,59 @@
+{% load my_templates %}
+
+<h5 style="color: black; font-size:20px ;font-weight: bolder;">{{jobs.count}} Available jobs</h5>
+<ul class="box-info">
+
+    {% for job in jobs  %}
+    {% slots job as applications %}
+    <li>
+        <div>
+             <i class='bx bxs-group' ></i>
+            <br>
+            <span class="text">
+                <p>Slots </p>
+                {{applications}}
+            </span>
+        </div>
+    
+        <span class="text">
+            <a href="#"></a>
+            <h3> {{job.job_title}}</h3>
+            <a href="{% url 'apply' job.id %}"><button class="btn btn-success btn-round-1">{{"Apply"|upper}}</button></a>
+            <br>
+            
+        </span>
+           
+            {% if request.user  in workarea.members.all %}
+            {% if check_in  %}
+            <!-- <form action="" method="post">
+                {% csrf_token %}
+                <input style="display: none;" type="text" name="check_in" value="{{check_in}}-{{workarea.id}}">
+            <button  type="submit" style="top: calc(0);right:calc(0%);position: relative;background: none;border: none;cursor: pointer;">
+                <svg height="64px" width="64px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000">
+                    <title>Check in</title>
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier"> <ellipse style="fill:#9ee41b;" cx="256" cy="256" rx="256" ry="255.832"></ellipse> <polygon style="fill:#FFFFFF;" points="235.48,392.08 114.44,297.792 148.84,253.616 223.176,311.512 345.848,134.504 391.88,166.392 "></polygon>
+                     </g></svg>
+            </button>
+        </form>
+            {% else %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <input style="display: none;" type="text" name="check_in" value="{{check_in}}-{{workarea.id}}">
+            <button  type="submit" style="top: -60px;right:-500px;position: relative;background: none;border: none;">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" width="64px" height="64px" fill="#000000">
+                    <title>Check out</title>
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier"> <ellipse style="fill:#E21B1B;" cx="256" cy="256" rx="256" ry="255.832"></ellipse> 
+                        <g> <rect x="228.021" y="113.143" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -106.0178 256.0051)" style="fill:#FFFFFF;" width="55.991" height="285.669"></rect> <rect x="113.164" y="227.968" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -106.0134 255.9885)" style="fill:#FFFFFF;" width="285.669" height="55.991"></rect> </g> </g></svg>
+            </button>
+        </form> -->
+       
+  
+        {% endif %}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
